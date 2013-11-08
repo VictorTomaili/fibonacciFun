@@ -7,22 +7,18 @@ namespace Fibonacci
     {
         public static BigInteger Calculate(BigInteger a)
         {
-            Func<BigInteger, BigInteger, BigInteger, BigInteger> fibo = 
-                AnonRecursiveFiboFunc<BigInteger, BigInteger, BigInteger, BigInteger>(func => (i, fibo1, fibo2) => i == a
-                ? fibo2
-                : func(i + 1, fibo1 + fibo2, fibo1));
-            return fibo(0, 1, 0);
+            var fibos = AnonRecursiveFiboFunc<BigInteger>(func => (i, fibos1, fibos2) => i == a
+                ? fibos2
+                : func(i + 1, fibos1 + fibos2, fibos1));
+            return fibos(0, 1, 0);
         }
 
+        delegate Func<TArg1, TArg2, TArg3, TArg4>
+            Recursive<TArg1, TArg2, TArg3, TArg4>(Recursive<TArg1, TArg2, TArg3, TArg4> r);
 
-        delegate Func<TArgi, TArgfibo1, TArgfibo2, TReturned> 
-            Recursive<TArgi, TArgfibo1, TArgfibo2, TReturned>(Recursive<TArgi, TArgfibo1, TArgfibo2, TReturned> r);
-        static Func<TArgi, TArgfibo1, TArgfibo2, TReturned>
-            AnonRecursiveFiboFunc<TArgi, TArgfibo1, TArgfibo2, TReturned>(
-            Func<Func<TArgi, TArgfibo1, TArgfibo2, TReturned>,
-            Func<TArgi, TArgfibo1, TArgfibo2, TReturned>> f)
+        private static Func<TArg, TArg, TArg, TArg> AnonRecursiveFiboFunc<TArg>(Func<Func<TArg, TArg, TArg, TArg>, Func<TArg, TArg, TArg, TArg>> function)
         {
-            Recursive<TArgi, TArgfibo1, TArgfibo2, TReturned> rec = r => (i, b, c) => f(r(r))(i, b, c);
+            Recursive<TArg, TArg, TArg, TArg> rec = r => (i, b, c) => function(r(r))(i, b, c);
             return rec(rec);
         }
     }
