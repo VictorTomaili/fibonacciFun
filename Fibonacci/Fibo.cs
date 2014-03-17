@@ -5,21 +5,21 @@ namespace Fibonacci
 {
     public static class Fibo
     {
-        public static BigInteger Calculate(BigInteger a)
+        public static BigInteger Calculate(BigInteger number)
         {
-            var fibos = AnonRecursiveFiboFunc<BigInteger>(func => (i, fibos1, fibos2) => i == a
-                ? fibos2
-                : func(i + 1, fibos1 + fibos2, fibos1));
-            return fibos(0, 1, 0);
+            var fibo = AnonRecursiveFiboFunc<BigInteger>(func => (step, fibo1, fibo2) => 
+                step == number
+                ? fibo2
+                : func(++step, fibo1 + fibo2, fibo1));
+            return fibo(0, 1, 0);
         }
 
-        delegate Func<TArg1, TArg2, TArg3, TArg4>
-            Recursive<TArg1, TArg2, TArg3, TArg4>(Recursive<TArg1, TArg2, TArg3, TArg4> r);
+        delegate Func<T1, T2, T3, T4> Recursive<T1, T2, T3, T4>(Recursive<T1, T2, T3, T4> r);
 
-        private static Func<TArg, TArg, TArg, TArg> AnonRecursiveFiboFunc<TArg>(Func<Func<TArg, TArg, TArg, TArg>, Func<TArg, TArg, TArg, TArg>> function)
+        private static Func<T, T, T, T> AnonRecursiveFiboFunc<T>(Func<Func<T, T, T, T>, Func<T, T, T, T>> function)
         {
-            Recursive<TArg, TArg, TArg, TArg> rec = r => (i, b, c) => function(r(r))(i, b, c);
-            return rec(rec);
+            Recursive<T, T, T, T> recursive = rec => (step, fibo1, fibo2) => function(rec(rec))(step, fibo1, fibo2);
+            return recursive(recursive);
         }
     }
 }
