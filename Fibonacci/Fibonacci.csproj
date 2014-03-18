@@ -7,7 +7,7 @@
     <ProjectGuid>{7ABEBF2C-F50C-450C-8FBF-F7E2AF03A5C7}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Fibonacci</RootNamespace>
+    <RootNamespace>Math</RootNamespace>
     <AssemblyName>Fibonacci</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -40,7 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Fibo.cs" />
+    <Compile Include="Fibonacci.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
